@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Minimal PDF Tools — Merge, Split, Compress, Rotate</title>
+  <meta name="description" content="Free online PDF tools: merge, split, rotate, compress, extract pages. All done securely in your browser with no uploads." />
+  <meta name="keywords" content="PDF merge, PDF split, PDF rotate, PDF compress, PDF extract, free online PDF tools" />
+  <meta property="og:title" content="Minimal PDF Tools" />
+  <meta property="og:description" content="Fast, private, and free PDF merge, split, rotate, compress, extract tools." />
+  <meta property="og:type" content="website" />
+  
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <!-- pdf-lib for PDF editing -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf-lib/1.17.1/pdf-lib.min.js"></script>
+  <!-- pdf.js for preview -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.14.305/pdf.min.js"></script>
+
+  <!-- Google AdSense -->
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6347863712874280"
+     crossorigin="anonymous"></script>
+</head>
+<body class="bg-gradient-to-br from-gray-50 to-gray-200 min-h-screen text-gray-800 flex flex-col">
+  <header class="bg-gradient-to-r from-indigo-500 to-purple-600 text-white shadow-lg p-6">
+    <h1 class="text-3xl font-bold text-center">📄 Minimal PDF Tools</h1>
+    <p class="text-center mt-2">Fast, Private, and Free — All processing happens in your browser</p>
+  </header>
+
+  <!-- Top Ad -->
+  <div class="container mx-auto my-4 text-center">
+    <ins class="adsbygoogle"
+         style="display:block; text-align:center;"
+         data-ad-layout="in-article"
+         data-ad-format="fluid"
+         data-ad-client="ca-pub-6347863712874280"
+         data-ad-slot="1593578144"></ins>
+    <script>
+      (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
+  </div>
+
+  <main class="flex-1 container mx-auto px-4 py-8 grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+    <!-- Merge PDF Card -->
+    <div class="bg-white rounded-2xl shadow-lg p-6 hover:shadow-2xl transition">
+      <h2 class="text-xl font-semibold mb-3">Merge PDFs</h2>
+      <input type="file" id="mergeInput" multiple accept="application/pdf" class="mb-3" />
+      <button onclick="mergePDFs()" class="bg-indigo-600 text-white px-4 py-2 rounded-lg">Merge</button>
+    </div>
+
+    <!-- Inline Ad -->
+    <div class="col-span-full my-6">
+      <ins class="adsbygoogle"
+           style="display:block; text-align:center;"
+           data-ad-layout="in-article"
+           data-ad-format="fluid"
+           data-ad-client="ca-pub-6347863712874280"
+           data-ad-slot="1593578144"></ins>
+      <script>
+        (adsbygoogle = window.adsbygoogle || []).push({});
+      </script>
+    </div>
+
+    <!-- Split PDF Card -->
+    <div class="bg-white rounded-2xl shadow-lg p-6 hover:shadow-2xl transition">
+      <h2 class="text-xl font-semibold mb-3">Split PDF</h2>
+      <input type="file" id="splitInput" accept="application/pdf" class="mb-3" />
+      <button onclick="splitPDF()" class="bg-indigo-600 text-white px-4 py-2 rounded-lg">Split</button>
+    </div>
+
+    <!-- Rotate PDF Card -->
+    <div class="bg-white rounded-2xl shadow-lg p-6 hover:shadow-2xl transition">
+      <h2 class="text-xl font-semibold mb-3">Rotate PDF</h2>
+      <input type="file" id="rotateInput" accept="application/pdf" class="mb-3" />
+      <button onclick="rotatePDF()" class="bg-indigo-600 text-white px-4 py-2 rounded-lg">Rotate</button>
+    </div>
+
+    <!-- Inline Ad -->
+    <div class="col-span-full my-6">
+      <ins class="adsbygoogle"
+           style="display:block; text-align:center;"
+           data-ad-layout="in-article"
+           data-ad-format="fluid"
+           data-ad-client="ca-pub-6347863712874280"
+           data-ad-slot="1593578144"></ins>
+      <script>
+        (adsbygoogle = window.adsbygoogle || []).push({});
+      </script>
+    </div>
+
+    <!-- Compress PDF Card -->
+    <div class="bg-white rounded-2xl shadow-lg p-6 hover:shadow-2xl transition">
+      <h2 class="text-xl font-semibold mb-3">Compress PDF</h2>
+      <input type="file" id="compressInput" accept="application/pdf" class="mb-3" />
+      <button onclick="compressPDF()" class="bg-indigo-600 text-white px-4 py-2 rounded-lg">Compress</button>
+    </div>
+
+    <!-- Extract Pages Card -->
+    <div class="bg-white rounded-2xl shadow-lg p-6 hover:shadow-2xl transition">
+      <h2 class="text-xl font-semibold mb-3">Extract Pages</h2>
+      <input type="file" id="extractInput" accept="application/pdf" class="mb-3" />
+      <button onclick="extractPages()" class="bg-indigo-600 text-white px-4 py-2 rounded-lg">Extract</button>
+    </div>
+
+    <!-- Inline Ad -->
+    <div class="col-span-full my-6">
+      <ins class="adsbygoogle"
+           style="display:block; text-align:center;"
+           data-ad-layout="in-article"
+           data-ad-format="fluid"
+           data-ad-client="ca-pub-6347863712874280"
+           data-ad-slot="1593578144"></ins>
+      <script>
+        (adsbygoogle = window.adsbygoogle || []).push({});
+      </script>
+    </div>
+
+    <!-- Preview PDF Card -->
+    <div class="bg-white rounded-2xl shadow-lg p-6 hover:shadow-2xl transition">
+      <h2 class="text-xl font-semibold mb-3">Preview PDF</h2>
+      <input type="file" id="previewInput" accept="application/pdf" class="mb-3" />
+      <canvas id="pdfPreview" class="border rounded-lg"></canvas>
+    </div>
+  </main>
+
+  <footer class="bg-gray-800 text-white text-center p-4 mt-8">
+    <p>&copy; 2025 Minimal PDF Tools — All rights reserved.</p>
+    <!-- Bottom Ad -->
+    <div class="my-4">
+      <ins class="adsbygoogle"
+           style="display:block; text-align:center;"
+           data-ad-layout="in-article"
+           data-ad-format="fluid"
+           data-ad-client="ca-pub-6347863712874280"
+           data-ad-slot="1593578144"></ins>
+      <script>
+        (adsbygoogle = window.adsbygoogle || []).push({});
+      </script>
+    </div>
+  </footer>
+
+  <script>
+    async function mergePDFs() {
+      const input = document.getElementById('mergeInput');
+      if (!input.files.length) return alert("Please select PDFs");
+      const mergedPdf = await PDFLib.PDFDocument.create();
+      for (let file of input.files) {
+        const bytes = await file.arrayBuffer();
+        const pdf = await PDFLib.PDFDocument.load(bytes);
+        const copied = await mergedPdf.copyPages(pdf, pdf.getPageIndices());
+        copied.forEach(p => mergedPdf.addPage(p));
+      }
+      const mergedBytes = await mergedPdf.save();
+      downloadPDF(mergedBytes, "merged.pdf");
+    }
+
+    async function splitPDF() {
+      const input = document.getElementById('splitInput');
+      if (!input.files.length) return alert("Select a PDF");
+      const bytes = await input.files[0].arrayBuffer();
+      const pdf = await PDFLib.PDFDocument.load(bytes);
+      for (let i = 0; i < pdf.getPageCount(); i++) {
+        const newPdf = await PDFLib.PDFDocument.create();
+        const [page] = await newPdf.copyPages(pdf, [i]);
+        newPdf.addPage(page);
+        const newBytes = await newPdf.save();
+        downloadPDF(newBytes, `page-${i+1}.pdf`);
+      }
+    }
+
+    async function rotatePDF() {
+      const input = document.getElementById('rotateInput');
+      if (!input.files.length) return alert("Select a PDF");
+      const bytes = await input.files[0].arrayBuffer();
+      const pdf = await PDFLib.PDFDocument.load(bytes);
+      pdf.getPages().forEach(p => p.setRotation(PDFLib.degrees(90)));
+      const rotatedBytes = await pdf.save();
+      downloadPDF(rotatedBytes, "rotated.pdf");
+    }
+
+    async function compressPDF() {
+      const input = document.getElementById('compressInput');
+      if (!input.files.length) return alert("Select a PDF");
+      const bytes = await input.files[0].arrayBuffer();
+      const pdf = await PDFLib.PDFDocument.load(bytes);
+      const compressedBytes = await pdf.save({ useObjectStreams: true });
+      downloadPDF(compressedBytes, "compressed.pdf");
+    }
+
+    async function extractPages() {
+      const input = document.getElementById('extractInput');
+      if (!input.files.length) return alert("Select a PDF");
+      const bytes = await input.files[0].arrayBuffer();
+      const pdf = await PDFLib.PDFDocument.load(bytes);
+      const newPdf = await PDFLib.PDFDocument.create();
+      const pagesToExtract = [0, 1, 2];
+      const copied = await newPdf.copyPages(pdf, pagesToExtract);
+      copied.forEach(p => newPdf.addPage(p));
+      const extractedBytes = await newPdf.save();
+      downloadPDF(extractedBytes, "extracted.pdf");
+    }
+
+    function downloadPDF(bytes, name) {
+      const blob = new Blob([bytes], { type: 'application/pdf' });
+      const link = document.createElement('a');
+      link.href = URL.createObjectURL(blob);
+      link.download = name;
+      link.click();
+    }
+
+    document.getElementById('previewInput').addEventListener('change', async (e) => {
+      const file = e.target.files[0];
+      if (!file) return;
+      const bytes = await file.arrayBuffer();
+      const pdf = await pdfjsLib.getDocument({ data: bytes }).promise;
+      const page = await pdf.getPage(1);
+      const viewport = page.getViewport({ scale: 1.5 });
+      const canvas = document.getElementById('pdfPreview');
+      const ctx = canvas.getContext('2d');
+      canvas.height = viewport.height;
+      canvas.width = viewport.width;
+      await page.render({ canvasContext: ctx, viewport }).promise;
+    });
+  </script>
+</body>
+</html>
